@@ -9,15 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@syncfusion/ej2-base": "^29.2.4",
-    "@syncfusion/ej2-react-buttons": "^29.2.5",
-    "@syncfusion/ej2-react-charts": "^29.2.8",
-    "@syncfusion/ej2-react-dropdowns": "^29.2.8",
-    "@syncfusion/ej2-react-grids": "^29.2.8",
-    "@syncfusion/ej2-react-maps": "^29.2.4",
-    "@syncfusion/ej2-react-navigations": "^29.2.8",
-    "@syncfusion/ej2-react-splitbuttons": "^29.2.4",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lucide-react": "^0.513.0",
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -32,6 +26,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.4",
     "typescript": "^5"
   }
 }

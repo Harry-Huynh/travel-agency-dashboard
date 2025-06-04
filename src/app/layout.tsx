@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { registerLicense } from "@syncfusion/ej2-base";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-registerLicense(process.env.NEXT_PUBLIC_SYNCFUSION_LICENSE_KEY!);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
