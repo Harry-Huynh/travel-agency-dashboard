@@ -1,6 +1,4 @@
-"use client";
-
-import NavItems from "@/components/NavItems";
+import MainNav from "@/components/MainNav";
 
 const AdminLayout = ({
   children,
@@ -11,7 +9,7 @@ const AdminLayout = ({
     <div className="admin-layout">
       MobileSidebar
       <aside className="w-full max-w-[270px] hidden lg:block">
-        <NavItems />
+        <MainNav />
       </aside>
       <aside className="children">{children}</aside>
     </div>
