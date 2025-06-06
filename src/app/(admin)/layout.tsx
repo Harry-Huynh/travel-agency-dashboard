@@ -1,4 +1,5 @@
 import MainNav from "@/components/MainNav";
+import MobileSidebar from "@/components/MobileSidebar";
 
 const AdminLayout = ({
   children,
@@ -7,7 +8,7 @@ const AdminLayout = ({
 }>) => {
   return (
     <div className="admin-layout">
-      MobileSidebar
+      <MobileSidebar />
       <aside className="w-full max-w-[270px] hidden lg:block">
         <MainNav />
       </aside>

@@ -1,10 +1,7 @@
-import { registerLicense } from "@syncfusion/ej2-base";
-
-registerLicense(process.env.NEXT_PUBLIC_SYNCFUSION_LICENSE_KEY!);
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import RegisterLicense from "@/components/RegisterLicense";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <RegisterLicense>{children}</RegisterLicense>
       </body>
     </html>
   );
