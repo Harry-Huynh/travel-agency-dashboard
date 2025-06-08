@@ -268,7 +268,7 @@
       }
       figure {
         @apply flex items-center gap-2;
-        figCaption {
+        figcaption {
           @apply text-xs md:text-sm font-normal text-gray-100;
         }
       }
