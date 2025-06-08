@@ -371,7 +371,7 @@
   }
 
   .dashboard {
-    @apply flex flex-col gap-10 w-full  pb-20;
+    @apply flex flex-col gap-10 w-full pb-20;
 
     .container {
       @apply flex flex-col gap-5 mt-2.5;

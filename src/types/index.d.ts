@@ -156,3 +156,8 @@ declare interface TripFormData {
   duration: number;
   groupType: string;
 }
+
+declare interface HeaderProps {
+  title: string;
+  description: string;
+}
