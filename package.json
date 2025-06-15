@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sentry/nextjs": "^9.29.0",
     "@syncfusion/ej2-base": "^29.2.4",
     "@syncfusion/ej2-react-buttons": "^29.2.5",
     "@syncfusion/ej2-react-charts": "^29.2.8",
