@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
@@ -68,3 +69,5 @@ export const formatKey = (key: keyof TripFormData) => {
     .replace(/([A-Z])/g, " $1")
     .replace(/^./, (str) => str.toUpperCase());
 };
+
+export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));

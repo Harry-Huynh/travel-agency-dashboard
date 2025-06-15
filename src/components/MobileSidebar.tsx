@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NavItems from "./NavItems";
 
-const MobileSidebar = () => {
+const MobileSidebar = ({ user }: { user: LoggedInUser }) => {
   let sidebar: SidebarComponent;
 
   const toggleSidebar = () => sidebar.toggle();
@@ -29,7 +29,7 @@ const MobileSidebar = () => {
           showBackdrop={true}
           type="Over"
         >
-          <NavItems handleClick={toggleSidebar} />
+          <NavItems handleClick={toggleSidebar} user={user} />
         </SidebarComponent>
       </header>
     </div>

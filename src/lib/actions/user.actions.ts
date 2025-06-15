@@ -5,6 +5,7 @@ import { createAdminClient, createSessionClient } from "@/lib/appwrite";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ID, OAuthProvider, Query } from "node-appwrite";
+import { parseStringify } from "../utils";
 
 const {
   APPWRITE_DATABASE_ID: databaseId,
@@ -31,9 +32,10 @@ export const getExistingUser = async (id: string) => {
 
 export const storeUserData = async () => {
   try {
+    const { account } = await createSessionClient();
     const { database } = await createAdminClient();
 
-    const user = await getLoggedInUser();
+    const user = await account.get();
 
     if (!user) {
       throw new Error("User not found");
@@ -53,6 +55,7 @@ export const storeUserData = async () => {
         email: user.email,
         accountId: user.$id,
         joinedAt: new Date().toISOString(),
+        imageUrl: "/images/avatar-default.svg",
       }
     );
 
@@ -65,7 +68,7 @@ export const storeUserData = async () => {
   }
 };
 
-// Provider access token is not available on SSR
+// Provider access token is not available on SSR in appwrite
 // export const getGooglePicture = async (accessToken: string) => {
 //   try {
 //     const response = await fetch(
@@ -115,31 +118,32 @@ export const logoutUser = async () => {
   }
 };
 
-export const getUser = async () => {
-  try {
-    const { database } = await createAdminClient();
+// getLoggedInUser function already did this job
+// export const getUser = async () => {
+//   try {
+//     const { database } = await createAdminClient();
 
-    const user = await getLoggedInUser();
+//     const user = await getLoggedInUser();
 
-    if (!user) {
-      return { redirectTo: "/sign-in" };
-    }
+//     if (!user) {
+//       return { redirectTo: "/sign-in" };
+//     }
 
-    const { documents } = await database.listDocuments(
-      databaseId!,
-      usersCollectionId!,
-      [
-        Query.equal("accountId", user.$id),
-        Query.select(["name", "email", "imageUrl", "joinedAt", "accountId"]),
-      ]
-    );
+//     const { documents } = await database.listDocuments(
+//       databaseId!,
+//       usersCollectionId!,
+//       [
+//         Query.equal("accountId", user.$id),
+//         Query.select(["name", "email", "imageUrl", "joinedAt", "accountId"]),
+//       ]
+//     );
 
-    return documents.length > 0 ? documents[0] : { redirectTo: "/sign-in" };
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return null;
-  }
-};
+//     return documents.length > 0 ? documents[0] : { redirectTo: "/sign-in" };
+//   } catch (error) {
+//     console.error("Error fetching user:", error);
+//     return null;
+//   }
+// };
 
 export async function validateAdminUser() {
   try {
@@ -149,19 +153,11 @@ export async function validateAdminUser() {
       return { redirectTo: "/sign-in" };
     }
 
-    const existingUser = await getExistingUser(user.$id);
-
-    if (existingUser?.status === "user") {
+    if (user.status === "user") {
       return { redirectTo: "/" };
-    }
-
-    if (!existingUser?.$id) {
-      await storeUserData();
-      return;
     }
   } catch (error) {
     console.log("Auth error: " + error);
-
     return { redirectTo: "/sign-in" };
   }
 }
@@ -172,7 +168,9 @@ export async function getLoggedInUser() {
 
     const user = await account.get();
 
-    return user;
+    const existingUser = await getExistingUser(user.$id);
+
+    return parseStringify(existingUser);
   } catch (error) {
     console.log("Error fetching user: " + error);
     return null;

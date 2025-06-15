@@ -1,6 +1,6 @@
 import MainNav from "@/components/MainNav";
 import MobileSidebar from "@/components/MobileSidebar";
-import { validateAdminUser } from "@/lib/actions/user.actions";
+import { getLoggedInUser, validateAdminUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 
 const AdminLayout = async ({
@@ -14,11 +14,13 @@ const AdminLayout = async ({
     redirect(result.redirectTo);
   }
 
+  const loggedInUser = await getLoggedInUser();
+
   return (
     <div className="admin-layout">
-      <MobileSidebar />
+      <MobileSidebar user={loggedInUser} />
       <aside className="w-full max-w-[270px] hidden lg:block">
-        <MainNav />
+        <MainNav user={loggedInUser} />
       </aside>
       <aside className="children">{children}</aside>
     </div>

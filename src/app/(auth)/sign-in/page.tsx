@@ -1,9 +1,14 @@
-// import Button from "@/components/Button";
-import { loginWithGoogle } from "@/lib/actions/user.actions";
+import { getLoggedInUser, loginWithGoogle } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const SignIn = async () => {
+  const user = await getLoggedInUser();
+  if (user) {
+    redirect("/");
+  }
+
   return (
     <main className="auth">
       <section className="size-full glassmorphism flex-center px-6">

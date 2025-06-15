@@ -13,6 +13,15 @@ declare interface UserData extends BaseUser {
 
 declare type User = BaseUser;
 
+declare type LoggedInUser = {
+  name: string;
+  email: string;
+  accountId: string;
+  imageUrl: string;
+  joinedAt: string;
+  status: "user" | "admin";
+};
+
 declare interface Country {
   name: string;
   coordinates: [number, number];

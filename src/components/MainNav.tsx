@@ -4,10 +4,10 @@ import { SidebarComponent } from "@syncfusion/ej2-react-navigations";
 
 import NavItems from "./NavItems";
 
-const MainNav = () => {
+const MainNav = ({ user }: { user: LoggedInUser }) => {
   return (
     <SidebarComponent width={270} enableGestures={false}>
-      <NavItems />
+      <NavItems user={user} />
     </SidebarComponent>
   );
 };

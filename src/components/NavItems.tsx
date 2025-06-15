@@ -1,16 +1,23 @@
 import { sidebarItems } from "@/constants";
+import { logoutUser } from "@/lib/actions/user.actions";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
+const NavItems = ({
+  handleClick,
+  user,
+}: {
+  handleClick?: () => void;
+  user: LoggedInUser;
+}) => {
   const pathname = usePathname();
+  const router = useRouter();
 
-  const user = {
-    name: "John",
-    email: "demo@gmail.com",
-    imageUrl: "/images/david.webp",
+  const handleLogout = async () => {
+    await logoutUser();
+    router.push("/sign-in");
   };
 
   return (
@@ -64,9 +71,7 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
           </article>
 
           <button
-            onClick={() => {
-              console.log("Logout action triggered");
-            }}
+            onClick={handleLogout}
             className="cursor-pointer relative size-6"
           >
             <Image src="/icons/logout.svg" alt="logout" fill />
