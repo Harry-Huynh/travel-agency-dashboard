@@ -10,7 +10,7 @@ const NavItems = ({
   user,
 }: {
   handleClick?: () => void;
-  user: LoggedInUser;
+  user: UserData;
 }) => {
   const pathname = usePathname();
   const router = useRouter();

@@ -176,3 +176,29 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export async function getAllUsers(limit: number, offset: number) {
+  try {
+    const { database } = await createAdminClient();
+
+    const { documents: users, total } = await database.listDocuments(
+      databaseId!,
+      usersCollectionId!,
+      [Query.limit(limit), Query.offset(offset)]
+    );
+
+    if (total === 0) {
+      return {
+        users: [],
+        total,
+      };
+    }
+
+    const allUsers = users.map((user) => parseStringify(user));
+
+    return { allUsers, total };
+  } catch (error) {
+    console.log("Error fetching user: " + error);
+    return { users: [], total: 0 };
+  }
+}

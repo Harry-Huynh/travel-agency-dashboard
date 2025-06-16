@@ -1,13 +1,18 @@
 import Header from "@/components/Header";
+import UserTable from "@/components/UserTable";
+import { getAllUsers } from "@/lib/actions/user.actions";
 
-const AllUsers = () => {
+const AllUsers = async () => {
+  const { allUsers } = await getAllUsers(10, 0);
+
   return (
-    <main className="dashboard wrapper">
+    <main className="all-users wrapper">
       <Header
-        title="Trips Page"
-        description="Check out our current users in real time"
+        title="Manage Users"
+        description="Filter, sort, and access detailed user profiles"
       />
-      All Users Page Contents
+
+      <UserTable users={allUsers ?? []} />
     </main>
   );
 };

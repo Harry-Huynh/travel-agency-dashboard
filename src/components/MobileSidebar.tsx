@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NavItems from "./NavItems";
 
-const MobileSidebar = ({ user }: { user: LoggedInUser }) => {
+const MobileSidebar = ({ user }: { user: UserData }) => {
   let sidebar: SidebarComponent;
 
   const toggleSidebar = () => sidebar.toggle();

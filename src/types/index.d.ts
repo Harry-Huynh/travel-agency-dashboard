@@ -1,26 +1,17 @@
 declare interface BaseUser {
-  id: string;
+  accountId: string;
   name: string;
   email: string;
-  dateJoined: string;
+  joinedAt: string;
   imageUrl: string;
 }
 
 declare interface UserData extends BaseUser {
-  itineraryCreated: number | string;
+  itineraryCreated?: number | string;
   status: "user" | "admin";
 }
 
 declare type User = BaseUser;
-
-declare type LoggedInUser = {
-  name: string;
-  email: string;
-  accountId: string;
-  imageUrl: string;
-  joinedAt: string;
-  status: "user" | "admin";
-};
 
 declare interface Country {
   name: string;
@@ -169,4 +160,6 @@ declare interface TripFormData {
 declare interface HeaderProps {
   title: string;
   description: string;
+  ctaText?: string;
+  ctaUrl?: string;
 }
