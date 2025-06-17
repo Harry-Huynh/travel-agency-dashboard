@@ -10,7 +10,6 @@ import { parseStringify } from "../utils";
 const {
   APPWRITE_DATABASE_ID: databaseId,
   APPWRITE_USERS_COLLECTION_ID: usersCollectionId,
-  // APPWRITE_TRIPS_COLLECTION_ID: tripsCollectionId,
 } = process.env;
 
 export const getExistingUser = async (id: string) => {

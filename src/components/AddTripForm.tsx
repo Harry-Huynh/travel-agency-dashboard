@@ -13,6 +13,7 @@ import {
   MapsComponent,
 } from "@syncfusion/ej2-react-maps";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const AddTripForm = ({ user }: { user: UserData }) => {
@@ -25,6 +26,7 @@ const AddTripForm = ({ user }: { user: UserData }) => {
     duration: 0,
     groupType: "",
   });
+  const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -89,8 +91,29 @@ const AddTripForm = ({ user }: { user: UserData }) => {
 
     try {
       setError(null);
-      console.log("User", user);
-      console.log("Form Data", formData);
+      const response = await fetch("/api/create-trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          country: formData.country,
+          duration: formData.duration,
+          travelStyle: formData.travelStyle,
+          interests: formData.interest,
+          budget: formData.budget,
+          groupType: formData.groupType,
+          userId: user.accountId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result?.id) {
+        router.push(`/trips/${result.id}`);
+      } else {
+        console.error("Failed to generate a trip");
+      }
     } catch (error) {
       console.error("Error generating trip", error);
     } finally {
