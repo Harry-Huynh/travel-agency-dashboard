@@ -10,6 +10,7 @@ import { parseStringify } from "../utils";
 const {
   APPWRITE_DATABASE_ID: databaseId,
   APPWRITE_USERS_COLLECTION_ID: usersCollectionId,
+  APPWRITE_TRIPS_COLLECTION_ID: tripsCollectionId,
 } = process.env;
 
 export const getExistingUser = async (id: string) => {
@@ -200,4 +201,43 @@ export async function getAllUsers(limit: number, offset: number) {
     console.log("Error fetching user: " + error);
     return { users: [], total: 0 };
   }
+}
+
+export async function getAllTrips(limit: number, offset: number) {
+  const { database } = await createAdminClient();
+
+  const allTripsData = await database.listDocuments(
+    databaseId!,
+    tripsCollectionId!,
+    [Query.limit(limit), Query.offset(offset), Query.orderDesc("createdAt")]
+  );
+
+  if (allTripsData.total === 0) {
+    console.error("No trips found");
+    return { allTrips: [], total: 0 };
+  }
+
+  const allTrips = allTripsData.documents.map((trip) => parseStringify(trip));
+
+  return {
+    allTrips,
+    total: allTripsData.total,
+  };
+}
+
+export async function getTripById(tripId: string) {
+  const { database } = await createAdminClient();
+
+  const trip = await database.getDocument(
+    databaseId!,
+    tripsCollectionId!,
+    tripId
+  );
+
+  if (!trip.$id) {
+    console.error("Trip not found");
+    return null;
+  }
+
+  return parseStringify(trip);
 }

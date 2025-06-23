@@ -163,3 +163,8 @@ declare interface HeaderProps {
   ctaText?: string;
   ctaUrl?: string;
 }
+
+declare type PillItem = {
+  text?: string;
+  bg: string;
+};
