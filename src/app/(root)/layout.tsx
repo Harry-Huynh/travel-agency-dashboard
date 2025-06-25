@@ -1,7 +1,7 @@
-import MainButtons from "@/components/MainButtons";
+import { redirect } from "next/navigation";
 
 const Layout = () => {
-  return <MainButtons />;
+  redirect("/dashboard");
 };
 
 export default Layout;
