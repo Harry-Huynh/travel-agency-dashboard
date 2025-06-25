@@ -206,11 +206,11 @@ const TripDetail = async ({
               <TripCard
                 id={id}
                 key={id}
-                name={name ?? ""}
+                name={name!}
                 location={itinerary?.[0].location ?? ""}
                 imageUrl={imageUrls[0]}
                 tags={[interests, travelStyle] as string[]}
-                price={estimatedPrice ?? ""}
+                price={estimatedPrice!}
               />
             )
           )}

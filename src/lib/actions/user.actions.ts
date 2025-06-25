@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use server";
 
 import { createAdminClient, createSessionClient } from "@/lib/appwrite";
@@ -5,13 +7,24 @@ import { createAdminClient, createSessionClient } from "@/lib/appwrite";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ID, OAuthProvider, Query } from "node-appwrite";
-import { parseStringify } from "../utils";
+import { parseStringify, parseTripData } from "../utils";
 
 const {
   APPWRITE_DATABASE_ID: databaseId,
   APPWRITE_USERS_COLLECTION_ID: usersCollectionId,
   APPWRITE_TRIPS_COLLECTION_ID: tripsCollectionId,
 } = process.env;
+
+interface Document {
+  [key: string]: any;
+}
+
+type FilterByDate = (
+  items: Document[],
+  key: string,
+  start: string,
+  end?: string
+) => number;
 
 export const getExistingUser = async (id: string) => {
   try {
@@ -240,4 +253,143 @@ export async function getTripById(tripId: string) {
   }
 
   return parseStringify(trip);
+}
+
+export async function getUsersAndTripsStats(): Promise<DashboardStats> {
+  const { database } = await createAdminClient();
+
+  const d = new Date();
+  const startCurrent = new Date(d.getFullYear(), d.getMonth(), 1).toISOString();
+  const startPrev = new Date(
+    d.getFullYear(),
+    d.getMonth() - 1,
+    1
+  ).toISOString();
+  const endPrev = new Date(d.getFullYear(), d.getMonth(), 0).toISOString();
+
+  const [users, trips] = await Promise.all([
+    database.listDocuments(databaseId!, usersCollectionId!),
+    database.listDocuments(databaseId!, tripsCollectionId!),
+  ]);
+
+  const filterByDate: FilterByDate = (items, key, start, end) =>
+    items.filter((item) => item[key] >= start && (!end || item[key] <= end))
+      .length;
+
+  const filterUsersByRole = (role: string) => {
+    return users.documents.filter((user: Document) => user.status === role);
+  };
+
+  return {
+    totalUsers: users.total,
+    usersJoined: {
+      currentMonth: filterByDate(
+        users.documents,
+        "joinedAt",
+        startCurrent,
+        undefined
+      ),
+      lastMonth: filterByDate(users.documents, "joinedAt", startPrev, endPrev),
+    },
+
+    userRole: {
+      total: filterUsersByRole("user").length,
+      currentMonth: filterByDate(
+        filterUsersByRole("user"),
+        "joinedAt",
+        startCurrent,
+        undefined
+      ),
+      lastMonth: filterByDate(
+        filterUsersByRole("user"),
+        "joinedAt",
+        startPrev,
+        endPrev
+      ),
+    },
+
+    totalTrips: trips.total,
+
+    tripsCreated: {
+      currentMonth: filterByDate(
+        trips.documents,
+        "createdAt",
+        startCurrent,
+        undefined
+      ),
+      lastMonth: filterByDate(trips.documents, "createdAt", startPrev, endPrev),
+    },
+  };
+}
+
+export async function getUserGrowthPerDay() {
+  const { database } = await createAdminClient();
+
+  const users = await database.listDocuments(databaseId!, usersCollectionId!);
+
+  const userGrowth = users.documents.reduce(
+    (acc: { [key: string]: number }, user: Document) => {
+      const date = new Date(user.joinedAt);
+      const day = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      acc[day] = (acc[day] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
+  return Object.entries(userGrowth).map(([day, count]) => ({
+    count: Number(count),
+    day,
+  }));
+}
+
+export async function getTripsCreatedPerDay() {
+  const { database } = await createAdminClient();
+
+  const trips = await database.listDocuments(databaseId!, tripsCollectionId!);
+
+  const tripsGrowth = trips.documents.reduce(
+    (acc: { [key: string]: number }, trip: Document) => {
+      const date = new Date(trip.createdAt);
+      const day = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      acc[day] = (acc[day] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
+  return Object.entries(tripsGrowth).map(([day, count]) => ({
+    count: Number(count),
+    day,
+  }));
+}
+
+export async function getTripsByTravelStyle() {
+  const { database } = await createAdminClient();
+
+  const trips = await database.listDocuments(databaseId!, tripsCollectionId!);
+
+  const travelStyleCounts = trips.documents.reduce(
+    (acc: { [key: string]: number }, trip: Document) => {
+      const tripDetail = parseTripData(trip.tripDetail);
+
+      if (tripDetail && tripDetail.travelStyle) {
+        const travelStyle = tripDetail.travelStyle;
+        acc[travelStyle] = (acc[travelStyle] || 0) + 1;
+      }
+      return acc;
+    },
+    {}
+  );
+
+  return Object.entries(travelStyleCounts).map(([travelStyle, count]) => ({
+    count: Number(count),
+    travelStyle,
+  }));
 }
