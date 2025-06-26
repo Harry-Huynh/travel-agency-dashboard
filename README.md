@@ -18,23 +18,24 @@ A powerful and intelligent admin dashboard built with Next.js App Router. Featur
 ---
 
 ## 📚 Table of Contents
-- [📚 Table of Contents](#-table-of-contents)
-- [🔗 Project Links](#-project-links)
-- [🚀 Features](#-features)
-- [🧪 Testing Information](#-testing-information)
-- [🌱 Environment Variables](#-environment-variables)
-- [📦 Dependencies](#-dependencies)
-- [🔐 Authentication Flow (Appwrite)](#-authentication-flow-appwrite)
-- [🌐 API \& Service Integrations](#-api--service-integrations)
-- [🧩 Key Components \& Pages](#-key-components--pages)
-- [🛡️ Route Protection Flow](#️-route-protection-flow)
-- [📌 Notes](#-notes)
+
+- [🧠 Admin Dashboard Application](#-admin-dashboard-application)
+  - [🔗 Project Links](#-project-links)
+  - [🚀 Features](#-features)
+  - [🧪 Testing Information](#-testing-information)
+  - [🌱 Environment Variables](#-environment-variables)
+  - [📦 Dependencies](#-dependencies)
+  - [🔐 Authentication Flow (Appwrite)](#-authentication-flow-appwrite)
+  - [🌐 API \& Service Integrations](#-api--service-integrations)
+  - [🧩 Key Components \& Pages](#-key-components--pages)
+  - [🛡️ Route Protection Flow](#️-route-protection-flow)
+  - [📌 Notes](#-notes)
 
 ---
 
 ## 🔗 Project Links
 
-🌐 **Live Website**: [Visit the Dashboard](https://travel-agency-dashboard-inky.vercel.app/)  
+🌐 **Live Website**: [Visit the Dashboard](https://travel-agency-dashboard-inky.vercel.app/sign-in)  
 📄 **License**: ISC License
 
 ---
