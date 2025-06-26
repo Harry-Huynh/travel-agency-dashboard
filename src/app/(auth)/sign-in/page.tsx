@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 const SignIn = async () => {
   const user = await getLoggedInUser();
   if (user) {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return (

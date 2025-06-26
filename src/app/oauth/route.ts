@@ -23,5 +23,5 @@ export async function GET(request) {
     await storeUserData();
   }
 
-  return NextResponse.redirect(`${request.nextUrl.origin}/dashboard`);
+  return NextResponse.redirect(`${request.nextUrl.origin}/`);
 }
