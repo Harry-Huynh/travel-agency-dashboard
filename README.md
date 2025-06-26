@@ -18,19 +18,17 @@ A powerful and intelligent admin dashboard built with Next.js App Router. Featur
 ---
 
 ## 📚 Table of Contents
-
-- [🧠 Admin Dashboard Application](#-admin-dashboard-application)
-  - [📚 Table of Contents](#-table-of-contents)
-  - [🔗 Project Links](#-project-links)
-  - [🚀 Features](#-features)
-  - [🧪 Testing Information](#-testing-information)
-  - [🌱 Environment Variables](#-environment-variables)
-  - [📦 Dependencies](#-dependencies)
-  - [🔐 Authentication Flow (Appwrite)](#-authentication-flow-appwrite)
-  - [🌐 API \& Service Integrations](#-api--service-integrations)
-  - [🧩 Key Components \& Pages](#-key-components--pages)
-  - [🛡️ Route Protection Flow](#️-route-protection-flow)
-  - [📌 Notes](#-notes)
+- [📚 Table of Contents](#-table-of-contents)
+- [🔗 Project Links](#-project-links)
+- [🚀 Features](#-features)
+- [🧪 Testing Information](#-testing-information)
+- [🌱 Environment Variables](#-environment-variables)
+- [📦 Dependencies](#-dependencies)
+- [🔐 Authentication Flow (Appwrite)](#-authentication-flow-appwrite)
+- [🌐 API \& Service Integrations](#-api--service-integrations)
+- [🧩 Key Components \& Pages](#-key-components--pages)
+- [🛡️ Route Protection Flow](#️-route-protection-flow)
+- [📌 Notes](#-notes)
 
 ---
 
@@ -147,7 +145,7 @@ UNSPLASH_ACCESS_KEY=
 | **Gemini AI**    | Provides AI-based itinerary planning and generation   |
 | **Sentry**       | Tracks errors and performance issues across the stack |
 | **Syncfusion**   | Renders real-time analytics and dashboards            |
-| \*\*Unsplash     | Retrieves the images for using in the itinerary       |
+| **Unsplash**     | Retrieves the images for using in the itinerary       |
 | **Appwrite**     | Manages authentication and user session data          |
 
 ---
